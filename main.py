@@ -36,7 +36,7 @@ def Login(URL, driver, daysAdvance, Username, Password):
     time.sleep(.5)
     driver.get(URL)
     
-    driver.set_window_size(800, 800)
+    driver.set_window_size(1000, 1000)
     driver.set_window_position(0,0)
     
     counter1 = 0
@@ -52,8 +52,10 @@ def Login(URL, driver, daysAdvance, Username, Password):
     boxesClicked = 4
     while(boxesClicked > 0):
         if(len(timeboxloc_Parent) == 0):
+            driver.close()
             driver.quit()
-            exit()
+            full = 'Full'
+            return full
         
         greenbox = timeboxloc_Parent[backwardsBox].find_element(By.CLASS_NAME, timeboxloc_Child)
         WebDriverWait(driver, waitTime).until(EC.element_to_be_clickable(greenbox)).click()
@@ -87,7 +89,11 @@ def Login(URL, driver, daysAdvance, Username, Password):
     groupName = driver.find_element(By.ID, groupNameID)
     groupName.send_keys('IEEE Mentor Session')
     
-    done.click()   
+    done.click()
+    success = 'Success'
+    time.sleep(.5)
+    driver.close()
+    return success
 
 def fileread(myFile):
     file = open(myFile, "r")
@@ -105,40 +111,26 @@ def fileread(myFile):
 
 def main():
     Username, Password = fileread("C:\\Users\\Freew\\OneDrive\\Desktop\\Python Projects\\Library Login\\Usernames and Password")
-    '''
-    run4sleep = 1
-    min15run = 1
-    while(1):
-        time.sleep(15)
-        now = FindDay()
-
-        timeHour = now[2]
-        timeMin = now[1]
-        
-        if(run4sleep/60 == min15run):
-            print('Number of runs since success:', run4sleep)
-            print(str(timeHour) + ':' + str(timeMin))
-            min15run = min15run + 1
-            
-        run4sleep = run4sleep + 1
-    
-    '''
      
     counter = 0
     while (counter < len(Username)):
         driver = fireFox()
         time.sleep(.5)
         
-        Login('https://booking.sjlibrary.org/space/9736', driver, 4, Username[counter], Password[counter])
+        results = Login('https://booking.sjlibrary.org/space/9736', driver, 4, Username[counter], Password[counter])
         driver.quit()
+        print(results)
         
-        print('Successful run:', counter + 1)
-        counter = counter + 1    
-        '''
-            if(counter == len(Username)):
-                print('Done')
-                time.sleep(84000)
-                run4sleep = 0
-        '''
+        if (results == 'Success'):
+            print('Successful run:', counter + 1)
+            counter = counter + 1
+            
+        if (results == 'Full'):
+            print('No More Rooms Available')
+            break
+        
+        if (results != 'Full' and results != 'Success'):
+            print('Error Occured: Trying Again')
+        
 
 main()
