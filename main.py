@@ -166,7 +166,7 @@ def fileread(myFile):
 
 def main():
     # Calls to fileread to pull usernames and passwords off the provided file
-    Username, Password = fileread("C:\\Users\\Freew\\OneDrive\\Desktop\\Python Projects\\Library Login\\Usernames and Password")
+    Username, Password = fileread("Path to Your file with the Usernames and Passwords")
      
     # A loop for checks and reruns for all the users
     counter = 0
