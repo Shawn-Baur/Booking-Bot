@@ -34,7 +34,7 @@ def Login(URL, driver, daysAdvance, Username, Password):
     submitbuttonID = 's-libapps-login-button'
     logInfo = 'form-control'
     contbuttonID = 'terms_accept'
-    submitbooking = 's-lc-eq-bform-submit'
+    submitbooking = 'btn-form-submit'
     groupNameID = 'nick'
     waitTime = 600
     
